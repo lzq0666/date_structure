@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <windows.h>
 
 // 二叉排序树结点结构
 typedef struct TreeNode {
@@ -24,6 +25,44 @@ typedef struct Queue {
     int capacity;
 } Queue;
 
+//函数声明
+
+// 结点操作函数
+TreeNode* createNode(int val);
+
+// 栈操作函数
+Stack* createStack(int capacity);
+void push(Stack* stack, TreeNode* node);
+TreeNode* pop(Stack* stack);
+bool isStackEmpty(Stack* stack);
+void freeStack(Stack* stack);
+
+// 队列操作函数
+Queue* createQueue(int capacity);
+void enqueue(Queue* queue, TreeNode* node);
+TreeNode* dequeue(Queue* queue);
+bool isQueueEmpty(Queue* queue);
+void freeQueue(Queue* queue);
+
+// 二叉排序树操作函数
+TreeNode* insert(TreeNode* node, int val);
+void preorderRecursive(TreeNode* node);
+void inorderRecursive(TreeNode* node);
+void postorderRecursive(TreeNode* node);
+void preorderNonRecursive(TreeNode* root);
+void inorderNonRecursive(TreeNode* root);
+void postorderNonRecursive(TreeNode* root);
+void levelOrder(TreeNode* root);
+int search(TreeNode* node, int key);
+void swapLeftRight(TreeNode* node);
+int getDepth(TreeNode* node);
+int getLeafCount(TreeNode* node);
+TreeNode* findMin(TreeNode* node);
+TreeNode* deleteNode(TreeNode* node, int val);
+
+// 辅助函数
+void clearInputBuffer();
+
 // 全局根结点指针
 TreeNode* root = NULL;
 
@@ -39,6 +78,7 @@ TreeNode* createNode(int val) {
     newNode->right = NULL;
     return newNode;
 }
+
 
 // 栈操作函数
 Stack* createStack(int capacity) {
@@ -70,6 +110,7 @@ void freeStack(Stack* stack) {
     free(stack->data);
     free(stack);
 }
+
 
 // 队列操作函数
 Queue* createQueue(int capacity) {
@@ -103,7 +144,9 @@ void freeQueue(Queue* queue) {
     free(queue);
 }
 
-// （1）插入新结点
+/*（1）*/
+
+// 插入新结点
 TreeNode* insert(TreeNode* node, int val) {
     if (node == NULL) {
         return createNode(val);
@@ -118,7 +161,9 @@ TreeNode* insert(TreeNode* node, int val) {
     return node;
 }
 
-// （2）前序遍历（递归）
+/*（2）*/
+
+// 前序遍历（递归）
 void preorderRecursive(TreeNode* node) {
     if (node != NULL) {
         printf("%d ", node->data);
@@ -145,7 +190,9 @@ void postorderRecursive(TreeNode* node) {
     }
 }
 
-// （3）前序遍历（非递归）
+/*（3）*/
+
+// 前序遍历（非递归）
 void preorderNonRecursive(TreeNode* root) {
     if (root == NULL) return;
 
@@ -207,7 +254,9 @@ void postorderNonRecursive(TreeNode* root) {
     freeStack(stack2);
 }
 
-// （4）层次遍历
+/*（4）*/
+
+// 层次遍历
 void levelOrder(TreeNode* root) {
     if (root == NULL) return;
 
@@ -225,7 +274,9 @@ void levelOrder(TreeNode* root) {
     freeQueue(queue);
 }
 
-// （5）查找给定关键字
+/*（5）*/
+
+// 查找给定关键字
 int search(TreeNode* node, int key) {
     if (node == NULL) {
         return 0; // 失败
@@ -240,7 +291,9 @@ int search(TreeNode* node, int key) {
     }
 }
 
-// （6）交换各结点的左右子树
+/*（6）*/
+
+// 交换各结点的左右子树
 void swapLeftRight(TreeNode* node) {
     if (node != NULL) {
         // 交换左右子树
@@ -254,7 +307,9 @@ void swapLeftRight(TreeNode* node) {
     }
 }
 
-// （7）求二叉树的深度
+/*（7）*/
+
+// 求二叉树的深度
 int getDepth(TreeNode* node) {
     if (node == NULL) {
         return 0;
@@ -266,7 +321,9 @@ int getDepth(TreeNode* node) {
     return (leftDepth > rightDepth) ? leftDepth + 1 : rightDepth + 1;
 }
 
-// （8）叶子结点数
+/*（8）*/
+
+// 叶子结点数
 int getLeafCount(TreeNode* node) {
     if (node == NULL) {
         return 0;
@@ -287,7 +344,9 @@ TreeNode* findMin(TreeNode* node) {
     return node;
 }
 
-// （9）删除某结点
+/*（9）*/
+
+// 删除某结点
 TreeNode* deleteNode(TreeNode* node, int val) {
     if (node == NULL) {
         return node;
@@ -323,34 +382,28 @@ void clearInputBuffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-// 显示菜单
-void showMenu() {
-    printf("\n========== 二叉排序树操作菜单 ==========\n");
-    printf("1. 插入新结点\n");
-    printf("2. 前序遍历(递归)\n");
-    printf("3. 中序遍历(递归)\n");
-    printf("4. 后序遍历(递归)\n");
-    printf("5. 前序遍历(非递归)\n");
-    printf("6. 中序遍历(非递归)\n");
-    printf("7. 后序遍历(非递归)\n");
-    printf("8. 层次遍历\n");
-    printf("9. 查找关键字\n");
-    printf("10. 交换左右子树\n");
-    printf("11. 求树的深度\n");
-    printf("12. 求叶子结点数\n");
-    printf("13. 删除结点\n");
-    printf("0. 退出程序\n");
-    printf("=======================================\n");
-    printf("请选择操作: ");
-}
-
 int main() {
     int choice, value;
-
-    printf("欢迎使用二叉排序树演示程序!\n");
-
     while (true) {
-        showMenu();
+        system("cls"); // 清屏
+        printf("欢迎使用二叉排序树演示程序!\n");
+        printf("\n========== 二叉排序树操作菜单 ==========\n");
+        printf("1. 插入新结点\n");
+        printf("2. 前序遍历(递归)\n");
+        printf("3. 中序遍历(递归)\n");
+        printf("4. 后序遍历(递归)\n");
+        printf("5. 前序遍历(非递归)\n");
+        printf("6. 中序遍历(非递归)\n");
+        printf("7. 后序遍历(非递归)\n");
+        printf("8. 层次遍历\n");
+        printf("9. 查找关键字\n");
+        printf("10. 交换左右子树\n");
+        printf("11. 求树的深度\n");
+        printf("12. 求叶子结点数\n");
+        printf("13. 删除结点\n");
+        printf("0. 退出程序\n");
+        printf("=======================================\n");
+        printf("请选择操作: ");
         if (scanf("%d", &choice) != 1) {
             printf("输入错误，请输入数字!\n");
             clearInputBuffer();
