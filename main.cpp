@@ -46,6 +46,7 @@ void freeQueue(Queue* queue);
 
 // 二叉排序树操作函数
 TreeNode* insert(TreeNode* node, int val);
+void insertMultiple(TreeNode** root); // 新增：插入多个结点的函数
 void preorderRecursive(TreeNode* node);
 void inorderRecursive(TreeNode* node);
 void postorderRecursive(TreeNode* node);
@@ -382,6 +383,28 @@ void clearInputBuffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+// 新增：插入多个结点的函数
+void insertMultiple(TreeNode** root) {
+    int n, val;
+    printf("请输入要插入的结点数: ");
+    if (scanf("%d", &n) != 1) {
+        printf("输入错误!\n");
+        clearInputBuffer();
+        return;
+    }
+
+    printf("请输入 %d 个要插入的值: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &val) != 1) {
+            printf("输入错误!\n");
+            clearInputBuffer();
+            return;
+        }
+        *root = insert(*root, val);
+    }
+    printf("成功插入 %d 个结点!\n", n);
+}
+
 int main() {
     int choice, value;
     while (true) {
@@ -389,18 +412,19 @@ int main() {
         printf("欢迎使用二叉排序树演示程序!\n");
         printf("\n========== 二叉排序树操作菜单 ==========\n");
         printf("1. 插入新结点\n");
-        printf("2. 前序遍历(递归)\n");
-        printf("3. 中序遍历(递归)\n");
-        printf("4. 后序遍历(递归)\n");
-        printf("5. 前序遍历(非递归)\n");
-        printf("6. 中序遍历(非递归)\n");
-        printf("7. 后序遍历(非递归)\n");
-        printf("8. 层次遍历\n");
-        printf("9. 查找关键字\n");
-        printf("10. 交换左右子树\n");
-        printf("11. 求树的深度\n");
-        printf("12. 求叶子结点数\n");
-        printf("13. 删除结点\n");
+        printf("2. 插入多个结点\n"); // 新增：插入多个结点选项
+        printf("3. 前序遍历(递归)\n");
+        printf("4. 中序遍历(递归)\n");
+        printf("5. 后序遍历(递归)\n");
+        printf("6. 前序遍历(非递归)\n");
+        printf("7. 中序遍历(非递归)\n");
+        printf("8. 后序遍历(非递归)\n");
+        printf("9. 层次遍历\n");
+        printf("10. 查找关键字\n");
+        printf("11. 交换左右子树\n");
+        printf("12. 求树的深度\n");
+        printf("13. 求叶子结点数\n");
+        printf("14. 删除结点\n");
         printf("0. 退出程序\n");
         printf("=======================================\n");
         printf("请选择操作: ");
@@ -420,9 +444,15 @@ int main() {
                     printf("输入错误!\n");
                     clearInputBuffer();
                 }
+                system("pause");
                 break;
 
             case 2:
+                insertMultiple(&root); // 调用插入多个结点的函数
+                system("pause");
+                break;
+
+            case 3:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -430,9 +460,10 @@ int main() {
                     preorderRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 3:
+            case 4:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -440,9 +471,10 @@ int main() {
                     inorderRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 4:
+            case 5:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -450,9 +482,10 @@ int main() {
                     postorderRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 5:
+            case 6:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -460,9 +493,10 @@ int main() {
                     preorderNonRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 6:
+            case 7:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -470,9 +504,10 @@ int main() {
                     inorderNonRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 7:
+            case 8:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -480,9 +515,10 @@ int main() {
                     postorderNonRecursive(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 8:
+            case 9:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -490,9 +526,10 @@ int main() {
                     levelOrder(root);
                     printf("\n");
                 }
+                system("pause");
                 break;
 
-            case 9:
+            case 10:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -508,36 +545,40 @@ int main() {
                         clearInputBuffer();
                     }
                 }
-                break;
-
-            case 10:
-                if (root == NULL) {
-                    printf("树为空!\n");
-                } else {
-                    swapLeftRight(root);
-                    printf("已交换所有结点的左右子树\n");
-                }
+                system("pause");
                 break;
 
             case 11:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
-                    int depth = getDepth(root);
-                    printf("二叉树的深度: %d\n", depth);
+                    swapLeftRight(root);
+                    printf("已交换所有结点的左右子树\n");
                 }
+                system("pause");
                 break;
 
             case 12:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
-                    int count = getLeafCount(root);
-                    printf("叶子结点数: %d\n", count);
+                    int depth = getDepth(root);
+                    printf("二叉树的深度: %d\n", depth);
                 }
+                system("pause");
                 break;
 
             case 13:
+                if (root == NULL) {
+                    printf("树为空!\n");
+                } else {
+                    int count = getLeafCount(root);
+                    printf("叶子结点数: %d\n", count);
+                }
+                system("pause");
+                break;
+
+            case 14:
                 if (root == NULL) {
                     printf("树为空!\n");
                 } else {
@@ -550,10 +591,11 @@ int main() {
                         clearInputBuffer();
                     }
                 }
+                system("pause");
                 break;
 
             case 0:
-                printf("感谢使用! 程序退出。\n");
+                printf("程序退出。\n");
                 return 0;
 
             default:
@@ -561,9 +603,6 @@ int main() {
                 break;
         }
 
-        printf("\n按回车键继续...");
-        clearInputBuffer();
-        getchar();
     }
 
     return 0;
